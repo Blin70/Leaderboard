@@ -12,7 +12,7 @@ function Table(){
         { Rank: '10', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
         { Rank: '11', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
         { Rank: '12', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '13', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
+        { Rank: '13', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'}
     ];
 
     const HeadData = ['Rank', 'Player', 'RR', 'Wins', 'Games Played'];
@@ -35,7 +35,7 @@ function Table(){
     });
 
     return(
-            <table className="w-1/2 border-2 border-solid border-black text-center text-2xl border-collapse">
+            <table className="table w-1/2 border-2 border-solid border-black text-center text-2xl border-collapse m-auto">
                 <thead className="border-2 border-solid border-black sticky top-0">
                     <tr>
                         {renderedHeadData}
