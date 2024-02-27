@@ -1,8 +1,14 @@
-import axios from 'axios';
 import './app.css';
 import Table from './Components/Table';
+import GetLeaderboard from './api';
 
 function App(){
+
+    const test = async () => {
+        const result = await GetLeaderboard();
+    };
+
+    test();
 
     const BodyData = [
         { Rank: '1', Player: 'Test1', RR: '130', Wins: '13', GamesPlayed: '20'},
