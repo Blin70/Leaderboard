@@ -1,7 +1,9 @@
+import axios from 'axios';
 import './app.css';
 import Table from './Components/Table';
 
 function App(){
+
     const BodyData = [
         { Rank: '1', Player: 'Test1', RR: '130', Wins: '13', GamesPlayed: '20'},
         { Rank: '2', Player: 'Test2', RR: '130', Wins: '13', GamesPlayed: '20'},
