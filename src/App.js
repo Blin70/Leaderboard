@@ -1,38 +1,39 @@
 import './app.css';
 import Table from './Components/Table';
 import GetLeaderboard from './api';
+import { useEffect, useState } from 'react';
 
 function App(){
+    const [PlayerData, setPlayerData] = useState([]);
 
-    const test = async () => {
-        const result = await GetLeaderboard();
-    };
+    useEffect(() => {
+        async function fetchData(){
+            const result = await GetLeaderboard();
+             const list = [];
+            result.map((player)=>{
+                let Rank = player.leaderboardRank
+                let gameName =  (player.gameName !== undefined) ? player.gameName : ('Anonnymous');
+                let TagLine = (player.tagLine !== undefined) ? (player.tagLine) : ('#????');
+                let RR =  player.rankedRating;
+                let Wins =  player.numberOfWins;
+               return(
+                    list.push({Rank, gameName, TagLine, RR, Wins})
+               );
+            })
+            setPlayerData(list);
+            console.log(list);
+        };
+        fetchData();
+    }, []);
+    console.log(PlayerData)
 
-    test();
-
-    const BodyData = [
-        { Rank: '1', Player: 'Test1', RR: '130', Wins: '13', GamesPlayed: '20'},
-        { Rank: '2', Player: 'Test2', RR: '130', Wins: '13', GamesPlayed: '20'},
-        { Rank: '3', Player: 'Test3', RR: '130', Wins: '13', GamesPlayed: '20'},
-        { Rank: '4', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '5', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '6', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '7', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '8', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '9', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '10', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '11', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '12', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'},
-        { Rank: '13', Player: 'Test4', RR: '135', Wins: '13', GamesPlayed: '20'}
-    ];
-
-    const HeadData = ['Rank', 'Player', 'RR', 'Wins', 'Games Played'];
+    const HeadData = ['Rank', 'Player', 'Tag Line', 'RR', 'Games Won'];
 
     
     
     return(
             <div style={{maxHeight:"802px"}} className='flex h-full w-full justify-center items-center overflow-auto'>
-                <Table BodyData={BodyData} HeadData={HeadData}/>
+                <Table BodyData={PlayerData} HeadData={HeadData}/>
             </div>
     );
 };
