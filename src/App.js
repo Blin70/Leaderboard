@@ -6,11 +6,12 @@ import { useEffect, useState } from 'react';
 
 function App(){
     const [PlayerData, setPlayerData] = useState([]);
-    const [size, setSize] =useState(100);
+    const [size, setSize] = useState(100);
+    const [act, setAct] = useState('Ep8Act1')
 
     useEffect(() => {
         async function fetchData(){
-            const result = await GetLeaderboard(size);
+            const result = await GetLeaderboard(size, act);
              const list = [];
             result.map((player)=>{
                 let Rank = player.leaderboardRank
@@ -26,7 +27,7 @@ function App(){
             console.log(list);
         };
         fetchData();
-    }, [size]);
+    }, [size, act]);
     console.log(PlayerData)
 
     const HeadData = ['Rank', 'Player', 'Tag Line', 'RR', 'Games Won'];
