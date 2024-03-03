@@ -9,6 +9,7 @@ function SizeForm({setSize}){
     };
 
     const handleClick = () => {
+    // eslint-disable-next-line eqeqeq
     if(value == 0){
         setSize(1); 
         setValue(1)

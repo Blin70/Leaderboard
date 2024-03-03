@@ -25,11 +25,9 @@ function App(){
                );
             })
             setPlayerData(list);
-            console.log(list);
         };
         fetchData();
     }, [size, act]);
-    console.log(PlayerData)
 
     const HeadData = ['Rank', 'Player', 'Tag Line', 'RR', 'Games Won'];
 
