@@ -2,6 +2,7 @@ import './app.css';
 import Table from './Components/Table';
 import GetLeaderboard from './api';
 import SizeForm from './Components/SizeForm';
+import ChooseAct from './Components/ChooseAct';
 import { useEffect, useState } from 'react';
 
 function App(){
@@ -32,7 +33,9 @@ function App(){
 
     const HeadData = ['Rank', 'Player', 'Tag Line', 'RR', 'Games Won'];
 
-    
+    const getActName = (ActName) => {
+        setAct(ActName);
+    };
     
     return(
         <div className='h-full w-full'>
@@ -40,6 +43,7 @@ function App(){
                 <Table BodyData={PlayerData} HeadData={HeadData}/>
             </div>
             <SizeForm setSize={setSize}/>
+            <ChooseAct setActName={getActName} />
         </div>
     );
 };
