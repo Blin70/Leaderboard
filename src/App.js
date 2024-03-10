@@ -4,6 +4,7 @@ import GetLeaderboard from './api';
 import SizeForm from './Components/SizeForm';
 import ChooseAct from './Components/ChooseAct';
 import { useEffect, useState } from 'react';
+import { supabase } from './Supabase/SupabaseClient';
 
 function App(){
     const [PlayerData, setPlayerData] = useState([]);
@@ -34,7 +35,20 @@ function App(){
     const getActName = (ActName) => {
         setAct(ActName);
     };
-    
+
+    //Supabase
+    //SignUp    //works
+
+    const signUp = async () => {
+        const { data, error } = await supabase.auth.signUp({
+            email: email,
+            password: password,
+          })
+    }
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     return(
         <div className='h-full w-full'>
             <div style={{maxHeight:"802px"}} className='flex h-full w-full justify-center items-center overflow-auto'>
@@ -42,6 +56,9 @@ function App(){
             </div>
             <SizeForm setSize={setSize}/>
             <ChooseAct setActName={getActName} />
+            <input onChange={(e)=>setEmail(e.target.value)} value={email} type='text' placeholder='Enter Email'/>
+            <input onChange={(e)=>setPassword(e.target.value)} value={password} type='text' placeholder='Enter Password'/>
+            <button onClick={signUp} disabled={email === '' || password === ''}>SignUp</button>
         </div>
     );
 };
