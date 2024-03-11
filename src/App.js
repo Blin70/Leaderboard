@@ -1,61 +1,24 @@
-import './app.css';
-import Table from './Components/Table';
-import GetLeaderboard from './api';
-import SizeForm from './Components/SizeForm';
-import ChooseAct from './Components/ChooseAct';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { supabase } from './Supabase/SupabaseClient';
+import LeaderboardPage from './Pages/LeaderboardPage';
 
 function App(){
-    const [PlayerData, setPlayerData] = useState([]);
-    const [size, setSize] = useState(100);
-    const [act, setAct] = useState('Ep8Act1')
-
-    useEffect(() => {
-        async function fetchData(){
-            const result = await GetLeaderboard(size, act);
-             const list = [];
-            result.map((player)=>{
-                let Rank = player.leaderboardRank
-                let gameName =  (player.gameName !== undefined) ? player.gameName : ('Anonnymous');
-                let TagLine = (player.tagLine !== undefined) ? (player.tagLine) : ('#????');
-                let RR =  player.rankedRating;
-                let Wins =  player.numberOfWins;
-               return(
-                    list.push({Rank, gameName, TagLine, RR, Wins})
-               );
-            })
-            setPlayerData(list);
-        };
-        fetchData();
-    }, [size, act]);
-
-    const HeadData = ['Rank', 'Player', 'Tag Line', 'RR', 'Games Won'];
-
-    const getActName = (ActName) => {
-        setAct(ActName);
-    };
-
     //Supabase
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
     //SignUp    //works
 
     const signUp = async () => {
         const { data, error } = await supabase.auth.signUp({
             email: email,
             password: password,
-          })
+          });
     }
-
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
 
     return(
         <div className='h-full w-full'>
-            <div style={{maxHeight:"802px"}} className='flex h-full w-full justify-center items-center overflow-auto'>
-                <Table BodyData={PlayerData} HeadData={HeadData}/>
-            </div>
-            <SizeForm setSize={setSize}/>
-            <ChooseAct setActName={getActName} />
+            <LeaderboardPage/>
             <input onChange={(e)=>setEmail(e.target.value)} value={email} type='text' placeholder='Enter Email'/>
             <input onChange={(e)=>setPassword(e.target.value)} value={password} type='text' placeholder='Enter Password'/>
             <button onClick={signUp} disabled={email === '' || password === ''}>SignUp</button>
