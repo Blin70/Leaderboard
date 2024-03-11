@@ -34,10 +34,10 @@ function LeaderboardPage(){
     const getActName = (ActName) => {
         setAct(ActName);
     };
-
+                //test the max height on the div
     return(
-        <>
-            <div style={{maxHeight:"802px"}} className='flex h-full w-full justify-center items-center overflow-auto'>
+        <>  
+            <div style={{maxHeight:"750px"}} className='flex h-full w-full justify-center items-center overflow-auto mt-8'>
                 <Table BodyData={PlayerData} HeadData={HeadData}/>
             </div>
             <SizeForm setSize={setSize}/>
