@@ -5,6 +5,7 @@ import './css/index.css';
 import ProfilePage from "./Pages/ProfilePage";
 import NotFoundPage from "./Pages/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { SessionProvider } from "./context/Session";
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     {
         path: '/Profile',
         element: <ProfilePage/>
+    },
+    {
+        path: '/Profile/:User',
+        element: <ProfilePage/>
     }
 ]);
 
@@ -22,5 +27,7 @@ const el = document.getElementById("root");
 const root = ReactDOM.createRoot(el);
 
 root.render(
-    <RouterProvider router={router}/>
+    <SessionProvider>
+        <RouterProvider router={router}/>
+    </SessionProvider>
 );
