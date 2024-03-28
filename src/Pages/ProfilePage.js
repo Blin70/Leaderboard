@@ -52,6 +52,11 @@ function ProfilePage(){
                         <div className="w-full inline">
                             <input onClick={() => dispatch({ type: 'new_RememberMe'})} type="checkbox" className="accent-[#c7c7c7]"/>
                             <label className="text-lg text-[#cfcfcf]/50">Remember me!</label>{/*Not Implemented yet*/}
+                            <label className="float-right text-lg text-[#cfcfcf]/50 cursor-pointer hover:text-gray-600">Forgot Password!</label>{/*Not implemented yet*/}
+                        </div>
+                        <div className="w-full mt-5">
+                            <label className="text-[#c7c7c7]/40 text-xl">Already have an account? </label>
+                            <label className="text-[#c7c7c7]/40 text-xl hover:text-[#c7c7c7] cursor-pointer">Sign In</label>
                         </div>
                         {/*<button onClick={() => SignIn(state.email, state.password)} disabled={state.email === '' || state.password === ''}>LogIn</button>*/}
                     </div>
