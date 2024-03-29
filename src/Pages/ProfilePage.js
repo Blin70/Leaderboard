@@ -4,8 +4,9 @@ import Navbar from "../Components/Navbar";
 import SignIn from "../Supabase/SignIn";
 import SignUp from "../Supabase/SignUp";
 import SignOut from "../Supabase/SignOut";
-import { MdEmail } from "react-icons/md";
-import Icon from "../Components/Icon";
+import InputFormDiv from "../Components/InputFormDiv";
+import RememberForgot from "../Components/RememberForgot";
+import LabelDiv from "../Components/LabelDiv";
 
 const reducer = (state, action) => {
     switch (action.type){
@@ -43,12 +44,8 @@ function ProfilePage(){
             dispatch({ type: 'new_RESET'});
         }
     }, [session]);
-
-    const handleClick = () => {
-        dispatch({ type:'new_signInPage'})
-    };
-
-    return(             //style the form
+    
+    return(            
         <><Navbar disableProfileClick/>
             {!session && (
                 <div className="absolute flex h-full w-full justify-center items-center bg-[#3a3d45]">
@@ -56,56 +53,28 @@ function ProfilePage(){
                         {!state.signInPage && (
                             <>
                                 <h1 className="text-6xl">Sign Up</h1>
-                                <div className="relative">
-                                    <MdEmail className="absolute fill-[#3a3d45] text-3xl right-0 top-1.5"/>
-                                    <input onChange={(e)=>dispatch({ type: 'new_email', payload: e.target.value})} value={state.email} type='text' name="email" placeholder='Enter Email' autoComplete="off" className="block h-10 w-full bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none"/>
-                                </div>
-                                <div className="relative">
-                                    <Icon state={state.tgPassword} dispatch={dispatch} passwordInput={true}/>
-                                    <input onChange={(e) => dispatch({ type: 'new_password', payload: e.target.value})} value={state.password} type={state.tgPassword ? 'text' : 'password'} name="password" placeholder='Enter Password' className="block h-10 w-full bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none"/>
-                                </div>
-                                <div className="relative">
-                                    <Icon state={state.tgRPassword} dispatch={dispatch}/>
-                                    <input onChange={(e) => dispatch({ type: 'new_repeatPassword', payload: e.target.value})} value={state.repeatPassword} type={state.tgRPassword ? 'text' : 'password'} name="repeat_password" placeholder='Repeat Password' className="block h-10 w-full bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none"/>
-                                </div>
+                                <InputFormDiv state={state} dispatch={dispatch} dynamic_elementname='MdEmail' inputdispatchtype='new_email' iputvalue='email' inputtype='text' inputname='email' inputplaceholder='Enter Email'  className="absolute fill-[#3a3d45] text-3xl right-0 top-1.5"/>
+                                <InputFormDiv state={state.tgPassword} dispatch={dispatch} passwordinput={true} dynamic_elementname='Icon' inputdispatchtype='new_password' inputvalue='password' inputtype={state.tgPassword ? 'text' : 'password'} inputname='password' inputplaceholder='Enter Password' />
+                                <InputFormDiv state={state.tgRPassword} dispatch={dispatch} passwordInput={false} dynamic_elementname='Icon' inputdispatchtype='new_repeatPassword' inputvalue='repeatPassword' inputtype={state.tgRPassword ? 'text' : 'password'} inputname='repeat_password' inputplaceholder='Repeat Password' />
                                 <button onClick={() => SignUp(state.email, state.password)} disabled={state.email === '' || state.password === '' || state.password !== state.repeatPassword} className="h-10 w-full text-2xl border-0 rounded mb-1 cursor-pointer">SignUp</button>
-                                <div className="w-full inline">
-                                    <input onClick={() => dispatch({ type: 'new_RememberMe'})} type="checkbox" className="accent-[#c7c7c7]"/>
-                                    <label className="text-lg text-[#cfcfcf]/50">Remember me!</label>{/*Not Implemented yet*/}
-                                </div>
-                                <div className="w-full mt-5">
-                                    <label className="text-[#c7c7c7]/40 text-xl">Already have an account? </label>
-                                    <label onClick={handleClick} className="text-[#c7c7c7]/40 text-xl hover:text-[#c7c7c7] cursor-pointer">Log In</label>
-                                </div>
+                                <RememberForgot state={state.RememberMe} dispatch={dispatch}/>
+                                <LabelDiv firstlabeltext='Already have an account? ' secondlabeltext='Log In' dispatch={dispatch} />
                             </>
                         )}
                         {state.signInPage && (
                             <>
                                 <h1 className="text-6xl">Log In</h1>
-                                <div className="relative">
-                                    <MdEmail className="absolute fill-[#3a3d45] text-3xl right-0 top-1.5"/>
-                                    <input onChange={(e)=>dispatch({ type: 'new_email', payload: e.target.value})} value={state.email} type='text' name="email" placeholder='Enter Email' autoComplete="off" className="block h-10 w-full bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none"/>
-                                </div>
-                                <div className="relative">
-                                    <Icon state={state.tgPassword} dispatch={dispatch} passwordInput={true}/>
-                                    <input onChange={(e) => dispatch({ type: 'new_password', payload: e.target.value})} value={state.password} type={state.tgPassword ? 'text' : 'password'} name="password" placeholder='Enter Password' className="block h-10 w-full bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none"/>
-                                </div>
+                                <InputFormDiv state={state} dispatch={dispatch} dynamic_elementname='MdEmail' inputdispatchtype='new_email' iputvalue='email' inputtype='text' inputname='email' inputplaceholder='Enter Email'  className="absolute fill-[#3a3d45] text-3xl right-0 top-1.5"/>
+                                <InputFormDiv state={state.tgPassword} dispatch={dispatch} passwordinput={true} dynamic_elementname='Icon' inputdispatchtype='new_password' inputvalue='password' inputtype={state.tgPassword ? 'text' : 'password'} inputname='password' inputplaceholder='Enter Password' />
                                 <button onClick={() => SignIn(state.email, state.password)} disabled={state.email === '' || state.password === ''} className="h-10 w-full text-2xl border-0 rounded mb-1 cursor-pointer">Log In</button>
-                                <div className="w-full inline">
-                                    <input onClick={() => dispatch({ type: 'new_RememberMe'})} type="checkbox" className="accent-[#c7c7c7]"/>
-                                    <label className="text-lg text-[#cfcfcf]/50">Remember me!</label>{/*Not Implemented yet*/}
-                                    <label className="float-right text-lg text-[#cfcfcf]/50 cursor-pointer hover:text-gray-600">Forgot Password!</label>{/*Not implemented yet*/}
-                                </div>
-                                <div className="w-full mt-5">
-                                    <label className="text-[#c7c7c7]/40 text-xl">Dont have an account? </label>
-                                    <label onClick={handleClick} className="text-[#c7c7c7]/40 text-xl hover:text-[#c7c7c7] cursor-pointer">Sign Up</label>
-                                </div>
+                                <RememberForgot state={state.RememberMe} dispatch={dispatch} secondLabel={true} />
+                                <LabelDiv firstlabeltext='Dont have an account? ' secondlabeltext='Sign Up' dispatch={dispatch}/>
                             </>
                         )}
                     </div>
                 </div>
             )}
-
+                {/* Work on when there is a session next */}
             {session && (
                 <div className="absolute flex h-full w-full justify-center items-center">
                    <button onClick={SignOut} disabled={!session}>LogOut</button>
