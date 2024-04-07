@@ -20,7 +20,7 @@ export default async function SignUp(email, password, name){
         const { data, error } = await supabase
         .from('Users')
         .insert([
-        { Name: name, Email: email.toLowerCase(), Password: password, ProfilePic: await getProfilePic(name[0]), Created: new Date().toLocaleString() }
+        { Name: name, Email: email.toLowerCase(), Password: password, ProfilePic: (await getProfilePic(name[0])), Created: new Date().toLocaleString() }
         ])
         if(error){
             console.log(error)

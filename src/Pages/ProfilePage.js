@@ -8,6 +8,7 @@ import SignOut from "../Supabase/SignOut";
 import InputFormDiv from "../Components/InputFormDiv";
 import RememberForgot from "../Components/RememberForgot";
 import LabelDiv from "../Components/LabelDiv";
+import { MdEdit } from "react-icons/md";
 
 const reducer = (state, action) => {
     switch (action.type){
@@ -31,23 +32,32 @@ const reducer = (state, action) => {
             return { ...state, RememberMe: !state.RememberMe};
         case 'new_ProfilePic':
             return { ...state, ProfilePic: action.payload};
+        case 'new_AccCreated':
+            return { ...state, AccCreated: action.payload};
         default:
             throw new Error();
     }
 }
 
 function ProfilePage(){
-    const [state, dispatch] = useReducer(reducer, { name:'', email:'', password:'', repeatPassword:'', tgPassword:false, tgRPassword:false, signInPage:false, RememberMe: false, ProfilePic: '' });
+    const [state, dispatch] = useReducer(reducer, { name:'', email:'', password:'', repeatPassword:'', tgPassword:false, tgRPassword:false, signInPage:false, RememberMe: false, ProfilePic: '', AccCreated: '' });
     const session = useSession();
+
+    const getAccCreation = async () => {
+        // Get the Account Creation Date
+        dispatch({ type: 'new_AccCreated', payload: (await supabase.from('Users').select('Created')).data[0]?.Created }) 
+    }
 
     const handleLogIn = async () => {
         await SignIn(state.email, state.password);
         dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic').eq('Email', state.email)).data[0].ProfilePic});
+        getAccCreation();
     }
 
-    const handleSignUp = async () => { //error when signing up but just for a sec
+    const handleSignUp = async () => {
         await SignUp(state.email, state.password, state.name);
         dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic').eq('Email', state.email)).data[0].ProfilePic});
+        getAccCreation();
     }
 
     const handleSignOut = () => {
@@ -55,17 +65,30 @@ function ProfilePage(){
         dispatch({ type: 'new_RESET'})
     }
 
+    const handleDelete = () => {
+        console.log('Delete func hasnt been implemented yet');
+    }
+
+
     useEffect(() => {
             if(session){
                 const getProfilePic = async () => {
-                     dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic').eq('Email', session.user.email)).data[0].ProfilePic});
+                    dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic')).data[0]?.ProfilePic});
+                }
+                const getUserName = async () => {
+                    dispatch({ type: 'new_name', payload: (await supabase.from('Users').select('Name')).data[0]?.Name});
+                }
+                const getPassword = async () => {
+                    dispatch({ type: 'new_password', payload: (await supabase.from('Users').select('Password')).data[0]?.Password});
                 }
                 getProfilePic();
+                getUserName();
+                getPassword();
+                getAccCreation();
             }
     }, [session]);
 
 
-    
     return(
         <><Navbar disableProfileClick/>
             {!session && (
@@ -96,14 +119,16 @@ function ProfilePage(){
                     </div>
                 </div>
             )}
-                {/* Work on when there is a session next */}
             {session && (
                 <div className="absolute flex h-full w-full justify-center items-center bg-[#3a3d45]">
-                    <div className="w-2/5 h-4/5 p-4 -mt-20">
+                    <div className="w-2/5 h-4/5 p-4 -mt-20 text-center">
                         <img src={state.ProfilePic} alt="Profile" />
-
+                        <h2 className="text-3xl relative">User Name: {state.name}  <MdEdit className="absolute text-3xl ml-7 top-0.5 cursor-pointer"/></h2>
+                        <h2 className="text-3xl">Account Created: {state.AccCreated}</h2>
+                        <h2 className="text-3xl relative">User Password: {state.password} <MdEdit className="absolute text-3xl ml-7 top-0.5 cursor-pointer"/></h2>
+                        <button onClick={handleSignOut} disabled={!session} className="h-10 w-1/6 text-2xl border-0 rounded mb-5 cursor-pointer">LogOut</button><br/>
+                        <button onClick={handleDelete} disabled={!session} className="h-10 text-2xl border-0 rounded-xl mb-1 cursor-pointer bg-red-950 font-semibold">Delete Account</button>
                     </div>
-                   <button onClick={handleSignOut} disabled={!session}>LogOut</button>
                 </div>
             )}
         </>
