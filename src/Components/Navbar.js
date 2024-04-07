@@ -14,7 +14,6 @@ function Navbar({ disableProfileClick }){
                     <Link to={disableProfileClick ? null : 'Profile'}>
                         <img alt='Default Profile Pic' src={DefaultProfilePic} className='h-20 w-20 rounded-full float-right mr-20 mt-2 mb-2'/>
                     </Link>
-                    
                 </div>
             </div>
     );

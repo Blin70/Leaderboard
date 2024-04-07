@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import './css/index.css';
-import ProfilePage from "./Pages/ProfilePage";
+import AuthPageSelector from "./Pages/AuthPageSelector";
 import NotFoundPage from "./Pages/NotFoundPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { SessionProvider } from "./context/Session";
@@ -15,11 +15,11 @@ const router = createBrowserRouter([
     },
     {
         path: '/Profile',
-        element: <ProfilePage/>
+        element: <AuthPageSelector/>
     },
     {
         path: '/Profile/:User',
-        element: <ProfilePage/>
+        element: <AuthPageSelector/>
     }
 ]);
 
