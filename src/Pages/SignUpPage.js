@@ -8,6 +8,7 @@ function SignUpPage({state, dispatch, getAccCreation}){
 
     const handleSignUp = async () => {
         await SignUp(state.email, state.password, state.name);
+        supabase.auth.refreshSession();
         dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic')).data[0]?.ProfilePic});
         getAccCreation();
     }

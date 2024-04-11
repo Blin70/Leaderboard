@@ -74,7 +74,7 @@ function AuthPageSelector(){
                     </div>
                 </div>
             )}
-            {session && <ProfilePage state={state} dispatch={dispatch} session={session} />}
+            {session && <ProfilePage state={state} dispatch={dispatch} />}
         </>
     );
    
