@@ -17,7 +17,7 @@ function ChangeName({user}){
     }
     
     const handleNameClick = async () => {
-        if(newname !== user.name){
+        if(newname !== user.name && newname.length >= 2){
             const { data, error } = await supabase.auth.updateUser({
                 data: { name: newname }
             })
