@@ -4,6 +4,7 @@ import useSession from "../Hooks/use-session";
 import DeleteAccModal from "../Components/DeleteAccModal";
 import ChangeName from "../Components/ChangeName";
 import ChangePassword from "../Components/ChangePassword";
+import ChangePhone from "../Components/ChangePhone";
 
 function ProfilePage({state, dispatch}){
     const session = useSession();
@@ -11,6 +12,7 @@ function ProfilePage({state, dispatch}){
         uuid: session.user.id,
         name: session.user.user_metadata.name ? session.user.user_metadata.name : session.user.user_metadata.first_name,
         email: session.user.email,
+        phone: session.user.user_metadata.phone,
         password: state.password,
         creationDate: state.AccCreated,
         profilePic: state.ProfilePic
@@ -31,6 +33,7 @@ function ProfilePage({state, dispatch}){
                 uuid: session.user.id,
                 name: session.user.user_metadata.name ? session.user.user_metadata.name : session.user.user_metadata.first_name,
                 email: session.user.email,
+                phone: session.user.user_metadata.phone,
                 password: state.password,
                 creationDate: state.AccCreated,
                 profilePic: state.ProfilePic
@@ -44,7 +47,9 @@ function ProfilePage({state, dispatch}){
             <div className="w-2/5 h-4/5 p-4 -mt-20 text-center">
                 <img src={user.profilePic} alt="Profile" />
                 <ChangeName  user={user} />
+                <h2 className="text-3xl">{user.email}</h2>
                 <h2 className="text-3xl">Account Created: {user.creationDate}</h2>
+                <ChangePhone user={user} />
                 <ChangePassword user={user} />
                 <br/>
                 <button onClick={handleSignOut} disabled={!session} className="h-10 w-1/6 text-2xl border-0 rounded mb-5 cursor-pointer">LogOut</button><br/>
