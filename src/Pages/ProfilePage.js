@@ -53,7 +53,7 @@ function ProfilePage({state, dispatch}){
                 <ChangePassword user={user} />
                 <br/>
                 <button onClick={handleSignOut} disabled={!session} className="h-10 w-1/6 text-2xl border-0 rounded mb-5 cursor-pointer">LogOut</button><br/>
-                <DeleteAccModal />
+                <DeleteAccModal uuid={user.uuid} />
             </div>
         </div>
     );
