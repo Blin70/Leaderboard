@@ -12,17 +12,16 @@ function DeleteAcc({uuid}){
     }
 
     const handleDelete = async () => {
-        let { data, error } = await supabase.rpc('delete_own_account', { user_id: uuid })
-        if (data){
-            SignOut();
-            console.log(data);
-        }else if(error){
+        let { error } = await supabase.rpc('delete_own_account', { user_id: uuid })
+        
+        if(error){
             console.log(error);
         }
-
+        window.localStorage.clear();
+        SignOut();
     };
     
-        //Have to make it so it log the user out while/before deleting the account
+    
     return ( 
         <>
             <button onClick={handleAskDelete} disabled={!session} className="h-10 text-2xl border-0 rounded-xl mb-1 cursor-pointer bg-red-950 font-semibold">Delete Account</button>
