@@ -7,7 +7,7 @@ import { supabase } from "../Supabase/SupabaseClient";
 function ChangePhone({user}){
     const [newphoneEdit, setNewphoneEdit] = useState(false);
     const [newphone, setNewphone] = useState(user.phone);
-
+    
     const handlePhoneEdit = () => {
         setNewphoneEdit(!newphoneEdit);
     }
@@ -17,7 +17,8 @@ function ChangePhone({user}){
     }
     
     const handlePhoneClick = async () => {
-        if(newphone !== user.phone && newphone.length >= 9 && newphone.typeof === 'number'){
+        if(newphone !== user.phone && newphone.length >= 9 && /^\d+$/.test(newphone)){
+            
             const { data, error } = await supabase.auth.updateUser({
                 data: { phone: newphone }
             })
@@ -45,7 +46,7 @@ function ChangePhone({user}){
                 : (
                     <div className="ml-10">
                         <br/>
-                        <input onChange={handlePhoneChange} value={newphone} className="w-52 mt-9 h-9 bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none" />
+                        <input onChange={handlePhoneChange} value={newphone || ""} className="w-52 mt-9 h-9 bg-[#c7c7c7] placeholder:text-[#6e6e6e] text-2xl border-0 rounded mb-5 focus-visible:outline-none" />
                         <FaRegCheckSquare onClick={handlePhoneClick} className="text-green-800 text-4xl ml-5 -mb-2.5 cursor-pointer" />
                         <FiXSquare onClick={()=>setNewphoneEdit(false)} className="text-red-800 text-4xl ml-2 -mb-2.5 cursor-pointer" />
                     </div>
