@@ -7,9 +7,12 @@ import { supabase } from "../Supabase/SupabaseClient";
 function SignInPage({state, dispatch, getAccCreation}){
 
     const handleLogIn = async () => {
-        await SignIn(state.email, state.password);
-        dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic')).data[0].ProfilePic});
-        getAccCreation();
+        let SignInResult = await SignIn(state.email, state.password);
+        
+        if(!(SignInResult instanceof Error)){
+            dispatch({ type: 'new_ProfilePic', payload: (await supabase.from('Users').select('ProfilePic')).data[0].ProfilePic});
+            getAccCreation();
+        }
     }
 
     return(

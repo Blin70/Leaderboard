@@ -9,7 +9,7 @@ export default async function SignIn(email, password){
 
         if(error){
             console.log(error.message);
-        }else{
-            console.log(data)
+            alert(error.message);
+            return error;
         }
 }

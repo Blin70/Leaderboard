@@ -5,7 +5,6 @@ function SizeForm({setSize}){
 
     const handleChange = (event) => {
         event.target.value <=200 && event.target.value>=0 ? setValue(event.target.value) : setValue(prev => prev)
-        console.log(event)
     };
 
     const handleClick = () => {

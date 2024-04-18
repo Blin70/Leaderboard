@@ -2,7 +2,6 @@ import { supabase } from "./SupabaseClient";
 import getProfilePic from "../profileApi";
 
 export default async function SignUp(email, password, name){
-    console.log(email, password);
       
     const { data, error } = await supabase.auth.signUp({
         email: email,
@@ -24,8 +23,6 @@ export default async function SignUp(email, password, name){
         ])
         if(error){
             console.log(error)
-        }else{
-            console.log(data)
         }
     }
 }

@@ -13,7 +13,6 @@ function SessionProvider({children}){
             } else if(session){
                 setSession(session)
             };
-            console.log(event, session);
         });
 
         return () => {
